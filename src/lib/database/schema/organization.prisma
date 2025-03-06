@@ -1,0 +1,56 @@
+model Organization {
+  id          String       @id @default(uuid())
+  name        String
+  slug        String?
+  logo        String?
+  createdAt   DateTime
+  metadata    String?
+  members     Member[]
+  invitations Invitation[]
+  teams       Team[]
+
+  @@unique([slug])
+  @@map("organization")
+}
+
+model Member {
+  id             String   @id @default(uuid())
+  organizationId String
+  userId         String
+  role           String
+  teamId         String?
+  createdAt      DateTime
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("member")
+}
+
+model Invitation {
+  id             String   @id @default(uuid())
+  organizationId String
+  email          String
+  role           String?
+  teamId         String?
+  status         String
+  expiresAt      DateTime
+  inviterId      String
+
+  user         User         @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("invitation")
+}
+
+model Team {
+  id             String    @id @default(uuid())
+  name           String
+  organizationId String
+  createdAt      DateTime
+  updatedAt      DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("team")
+}
