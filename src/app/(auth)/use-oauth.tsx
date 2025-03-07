@@ -5,7 +5,7 @@ export const useOauth = (flow: 'sign-in' | 'sign-up') => {
     try {
       await authClient.signIn.social({
         provider,
-        callbackURL: `${window.location.origin}/${flow === 'sign-in' ? 'dashboard' : 'start-organization'}`,
+        callbackURL: `${window.location.origin}/`,
       });
     } catch (error) {
       alert('An error occurred. Please try again later.');

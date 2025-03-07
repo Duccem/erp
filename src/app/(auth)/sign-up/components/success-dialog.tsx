@@ -33,7 +33,7 @@ const SuccessDialog = () => {
             <Button
               onClick={() => {
                 setShowSuccessModal(false);
-                router.push(`/start-organization`);
+                router.push(`/`);
               }}
               size="lg"
             >

@@ -1,15 +1,15 @@
-import { PrismaClient } from "@prisma/client";
-import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import { nextCookies } from "better-auth/next-js";
-import { bearer, emailOTP, organization } from "better-auth/plugins";
-import { headers } from "next/headers";
-import { cache } from "react";
-import { env } from "../env";
+import { PrismaClient } from '@prisma/client';
+import { betterAuth } from 'better-auth';
+import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { nextCookies } from 'better-auth/next-js';
+import { bearer, emailOTP, organization } from 'better-auth/plugins';
+import { headers } from 'next/headers';
+import { cache } from 'react';
+import { env } from '../env';
 const prisma = new PrismaClient();
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
-    provider: "postgresql",
+    provider: 'postgresql',
   }),
   advanced: {
     generateId: false,
@@ -17,8 +17,8 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       role: {
-        type: "string",
-        default: "UNDEFINED",
+        type: 'string',
+        default: 'ADMIN',
         input: true,
       },
     },
@@ -49,15 +49,13 @@ export const auth = betterAuth({
       },
     }),
   ],
-  trustedOrigins: ["http://localhost:3000"],
+  trustedOrigins: ['http://localhost:3000'],
 });
 
 export type BetterSession = typeof auth.$Infer.Session;
 export type BetterUser = typeof auth.$Infer.Session.user;
-export const getSession: () => Promise<BetterSession | null> = cache(
-  async () => {
-    return await auth.api.getSession({
-      headers: await headers(),
-    });
-  }
-);
+export const getSession: () => Promise<BetterSession | null> = cache(async () => {
+  return await auth.api.getSession({
+    headers: await headers(),
+  });
+});

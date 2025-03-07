@@ -10,11 +10,7 @@ export async function betterAuthMiddleware(req: NextRequest, publicRoutes: strin
   }
 
   if (session && publicRoutes.includes(req.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
-  }
-
-  if (req.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+    return NextResponse.redirect(new URL('/', req.url));
   }
 
   return NextResponse.next();

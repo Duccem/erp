@@ -9,9 +9,9 @@ import {
   AlertDialogTitle,
 } from '@/lib/ui/components/ui/alert-dialog';
 import { Button } from '@/lib/ui/components/ui/button';
+import { CheckCircle2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRecoveryPasswordStore } from '../utils/provider';
-import { CheckCircle2 } from 'lucide-react';
 
 const SuccessDialog = () => {
   const router = useRouter();
@@ -32,7 +32,7 @@ const SuccessDialog = () => {
             <Button
               onClick={() => {
                 setShowSuccessModal(false);
-                router.push('/dashboard');
+                router.push('/');
               }}
               size="lg"
             >
