@@ -5,6 +5,7 @@ import { nextCookies } from "better-auth/next-js";
 import { bearer, emailOTP, organization } from "better-auth/plugins";
 import { headers } from "next/headers";
 import { cache } from "react";
+import { env } from "../env";
 const prisma = new PrismaClient();
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -28,8 +29,8 @@ export const auth = betterAuth({
   socialProviders: {
     google: {
       enabled: true,
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: env.GOOGLE_CLIENT_ID!,
+      clientSecret: env.GOOGLE_CLIENT_SECRET!,
     },
   },
   plugins: [

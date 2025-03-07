@@ -11,6 +11,7 @@ model Organization {
 
   @@unique([slug])
   @@map("organization")
+  @@schema("erp")
 }
 
 model Member {
@@ -25,6 +26,7 @@ model Member {
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("member")
+  @@schema("erp")
 }
 
 model Invitation {
@@ -41,6 +43,7 @@ model Invitation {
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@map("invitation")
+  @@schema("erp")
 }
 
 model Team {
@@ -53,4 +56,5 @@ model Team {
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@map("team")
+  @@schema("erp")
 }
