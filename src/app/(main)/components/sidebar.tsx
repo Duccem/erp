@@ -19,7 +19,7 @@ import {
   useSidebar,
 } from '@/lib/ui/components/ui/sidebar';
 import { cn } from '@/lib/ui/lib/utils';
-import { ChevronRight, Coins, Home, SidebarIcon, Warehouse } from 'lucide-react';
+import { Building, ChevronRight, Coins, Home, SidebarIcon, Warehouse } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -63,7 +63,7 @@ export const AppSidebar = () => {
                 {section.items.map((item, index) => (
                   <Fragment key={`${item.title}-${index}`}>
                     {item.routes ? (
-                      <Collapsible defaultOpen className="group/collapsible">
+                      <Collapsible className="group/collapsible">
                         <SidebarMenuItem>
                           <CollapsibleTrigger asChild>
                             <SidebarMenuButton>
@@ -74,7 +74,7 @@ export const AppSidebar = () => {
                           </CollapsibleTrigger>
                           <CollapsibleContent className="transition-all duration-200">
                             <SidebarMenuSub>
-                              {item.routes?.map((subItem) => (
+                              {item.routes?.map((subItem: any) => (
                                 <SidebarMenuSubItem key={subItem.title}>
                                   <SidebarMenuSubButton asChild>
                                     <a
@@ -203,6 +203,18 @@ const sidebarItems = [
             roles: ['ADMIN', 'USER'],
           },
         ],
+      },
+    ],
+  },
+  {
+    title: 'Configuración',
+    roles: ['ADMIN', 'USER'],
+    routes: [
+      {
+        title: 'Organización',
+        icon: Building,
+        href: '/organization',
+        roles: ['ADMIN', 'USER'],
       },
     ],
   },

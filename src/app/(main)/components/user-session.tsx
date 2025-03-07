@@ -16,5 +16,6 @@ export const UserSession = () => {
       setUser(data.user);
     }
   }, [data]);
+
   return null;
 };
