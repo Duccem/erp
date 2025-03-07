@@ -1,9 +1,7 @@
 'use client';
-
-import { authClient } from '@/lib/auth/client';
 import Google from '@/lib/ui/components/icons/google';
 import { Button } from '@/lib/ui/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/lib/ui/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/lib/ui/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/lib/ui/components/ui/form';
 import { Input } from '@/lib/ui/components/ui/input';
 import { InputPassword } from '@/lib/ui/components/ui/input-password';
@@ -12,57 +10,52 @@ import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { z } from 'zod';
-import { useOauth } from '../use-oauth';
+import { useOauth } from '../../use-oauth';
+import { useSubmit } from '../utils/hooks';
+import { useSignUpStore } from '../utils/provider';
+import { formSchema, FormValues } from '../utils/schema';
+import SuccessDialog from './success-dialog';
+import VerifyForm from './verify-form';
 
-const formSchema = z.object({
-  email: z.string().min(3, { message: 'Invalid email' }).email({ message: 'Invalid email' }),
-  password: z.string().min(8, { message: 'Password must be at least 8 characters' }),
-});
-
-type FormValues = z.infer<typeof formSchema>;
-
-const SignInForm = () => {
+const SignUpForm = () => {
+  const { verification } = useSignUpStore((state) => state);
+  const { submit } = useSubmit();
+  const { onOauthPress } = useOauth('sign-up');
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
       password: '',
+      confirmPassword: '',
+      name: '',
     },
+    mode: 'all',
   });
-
   const { isSubmitting } = form.formState;
+
   const router = useRouter();
-  const { onOauthPress } = useOauth('sign-in');
-  const onSubmit = async (data: FormValues) => {
-    const { error } = await authClient.signIn.email({
-      email: data.email,
-      password: data.password,
-    });
-    if (error) {
-      return toast.error(error.message);
-    }
-    return router.push('/dashboard');
-  };
+
+  if (verification.state === 'pending') {
+    return <VerifyForm />;
+  }
+
   return (
     <div className="grid w-full h-full grow items-center px-20">
       <Form {...form}>
-        <form action="" className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
+        <form action="" className="w-full" onSubmit={form.handleSubmit(submit)}>
           <Card className="border-none shadow-none w-full">
             <CardHeader>
               <CardTitle>
-                <h1 className="text-2xl font-bold">Inicia sesión</h1>
+                <h1 className="text-2xl">Crea tu cuenta</h1>
               </CardTitle>
-              <CardDescription>El ERP más completo para tu negocio</CardDescription>
             </CardHeader>
             <CardContent className="">
               <FormField
                 control={form.control}
-                name="email"
+                name="name"
                 render={({ field }) => (
-                  <FormItem className="my-2">
-                    <FormLabel className="text-sm  font-bold ">Email</FormLabel>
+                  <FormItem className="my-2 flex-1">
+                    <FormLabel className="text-sm">Nombre</FormLabel>
                     <FormControl>
                       <Input {...field} className=""></Input>
                     </FormControl>
@@ -72,10 +65,37 @@ const SignInForm = () => {
               />
               <FormField
                 control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="my-2">
+                    <FormLabel className="text-sm">Email</FormLabel>
+                    <FormControl>
+                      <Input {...field} className=""></Input>
+                    </FormControl>
+                    <FormMessage></FormMessage>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="password"
                 render={({ field }) => (
                   <FormItem className="my-2">
-                    <FormLabel className="text-sm  font-bold">Contraseña</FormLabel>
+                    <FormLabel className="text-sm">Contraseña</FormLabel>
+                    <FormControl>
+                      <InputPassword {...field} autoComplete="current-password" className=""></InputPassword>
+                    </FormControl>
+                    <FormMessage></FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem className="my-2">
+                    <FormLabel className="text-sm">Confirma tu contraseña</FormLabel>
                     <FormControl>
                       <InputPassword {...field} autoComplete="current-password" className=""></InputPassword>
                     </FormControl>
@@ -85,9 +105,9 @@ const SignInForm = () => {
               />
             </CardContent>
             <CardFooter>
-              <div className="grid w-full">
-                <Button type="submit" disabled={isSubmitting} className="cursor-pointer">
-                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Iniciar sesión'}
+              <div className="grid w-full gap-y-4">
+                <Button type="submit" className="cursor-pointer" disabled={isSubmitting}>
+                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Crear cuenta'}
                 </Button>
                 <p className="flex items-center gap-x-3 text-sm text-muted-foreground before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border my-3">
                   or
@@ -103,19 +123,17 @@ const SignInForm = () => {
                     Google
                   </Button>
                 </div>
-                <Button variant="link" size="sm">
-                  <Link href="/sign-up">¿No tienes una cuenta? Crea una</Link>
-                </Button>
-                <Button variant="link" size="sm">
-                  <Link href="/recovery-password">¿Olvidaste tu contraseña? Recupérala aquí</Link>
+                <Button variant="link" size="sm" asChild>
+                  <Link href="/sign-in">¿Ya tienes una cuenta? Inicia sesión</Link>
                 </Button>
               </div>
             </CardFooter>
           </Card>
         </form>
       </Form>
+      <SuccessDialog />
     </div>
   );
 };
 
-export default SignInForm;
+export default SignUpForm;
