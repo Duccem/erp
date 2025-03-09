@@ -8,6 +8,8 @@ model Organization {
   members     Member[]
   invitations Invitation[]
   teams       Team[]
+  categories  Category[]
+  products    Product[]
 
   @@unique([slug])
   @@map("organization")

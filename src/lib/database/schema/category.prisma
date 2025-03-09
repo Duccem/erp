@@ -1,0 +1,27 @@
+model Category {
+  id    String @id @default(uuid())
+  name  String
+  color String
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  subCategories SubCategory[]
+
+  @@map("category")
+  @@schema("erp")
+}
+
+model SubCategory {
+  id    String @id @default(uuid())
+  name  String
+  color String
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  products Product[] @relation("sub_category_products")
+
+  @@map("sub_category")
+  @@schema("erp")
+}
