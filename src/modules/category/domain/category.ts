@@ -23,7 +23,7 @@ export class Category extends Aggregate {
       name: this.name.getValue(),
       color: this.color.getValue(),
       organizationId: this.organizationId.getValue(),
-      subCategories: this.subCategories.map((subCategory) => subCategory.toPrimitives()),
+      subCategories: this.subCategories ? this.subCategories.map((subCategory) => subCategory.toPrimitives()) : [],
       createdAt: this.createdAt.getValue(),
       updatedAt: this.updatedAt.getValue(),
     };
@@ -35,7 +35,9 @@ export class Category extends Aggregate {
       new StringValueObject(primitives.name),
       new StringValueObject(primitives.color),
       new Uuid(primitives.organizationId),
-      primitives.subCategories.map((subCategory) => SubCategory.fromPrimitives(subCategory)),
+      primitives.subCategories
+        ? primitives.subCategories.map((subCategory) => SubCategory.fromPrimitives(subCategory))
+        : [],
       new DateValueObject(primitives.createdAt),
       new DateValueObject(primitives.updatedAt)
     );

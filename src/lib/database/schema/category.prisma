@@ -8,6 +8,9 @@ model Category {
 
   subCategories SubCategory[]
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   @@map("category")
   @@schema("erp")
 }

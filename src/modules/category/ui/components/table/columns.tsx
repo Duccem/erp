@@ -12,23 +12,19 @@ import {
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowDown, ArrowUp, MoreHorizontal } from 'lucide-react';
 
-export const categoryColumns: ColumnDef<{ id: string; name: string }>[] = [
+export const categoryColumns: ColumnDef<{ id: string; name: string; color: string }>[] = [
   {
     id: 'select',
     enableHiding: false,
     enableSorting: false,
     cell: ({ row }) => {
       return (
-        <Checkbox
-          className="rounded-none"
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-        />
+        <Checkbox className="" checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} />
       );
     },
     header: ({ table }) => {
       <Checkbox
-        className="rounded-none"
+        className=""
         checked={table?.getIsAllPageRowsSelected() || (table?.getIsSomePageRowsSelected() && 'indeterminate')}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
       />;
@@ -40,14 +36,24 @@ export const categoryColumns: ColumnDef<{ id: string; name: string }>[] = [
     header: () => {
       const { createSortQuery, column, value } = useSortQuery();
       return (
-        <Button
-          className="p-0 hover:bg-transparent space-x-2"
-          variant="ghost"
-          onClick={() => createSortQuery('status')}
-        >
+        <Button className="p-0 hover:bg-transparent space-x-2" variant="ghost" onClick={() => createSortQuery('name')}>
           <span>Nombre</span>
-          {'status' === column && value === 'ASC' && <ArrowUp size={16} />}
-          {'status' === column && value === 'DESC' && <ArrowDown size={16} />}
+          {'name' === column && value === 'ASC' && <ArrowUp size={16} />}
+          {'name' === column && value === 'DESC' && <ArrowDown size={16} />}
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: 'color',
+    cell: ({ row }) => <div className="size-4 rounded-[4px]" style={{ backgroundColor: row.original.color }}></div>,
+    header: () => {
+      const { createSortQuery, column, value } = useSortQuery();
+      return (
+        <Button className="p-0 hover:bg-transparent space-x-2" variant="ghost" onClick={() => createSortQuery('color')}>
+          <span>Color</span>
+          {'color' === column && value === 'ASC' && <ArrowUp size={16} />}
+          {'color' === column && value === 'DESC' && <ArrowDown size={16} />}
         </Button>
       );
     },

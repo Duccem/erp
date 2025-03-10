@@ -9,20 +9,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/lib/ui/components/ui/dropdown-menu';
-import { Ban, ChevronDown, Plus } from 'lucide-react';
-import Link from 'next/link';
+import { Ban, ChevronDown } from 'lucide-react';
+import CreateCategorySheet from '../create/sheet';
 
 const CategoryActions = () => {
   const { setRowSelection, rowSelection } = useDataTableStore((store) => store);
   const transactionIds = Object.keys(rowSelection);
   if (transactionIds.length === 0) {
-    return (
-      <Link href={'/'} target="_blank">
-        <Button className="h-9" variant={'outline'} size={'icon'}>
-          <Plus className="size-4" />
-        </Button>
-      </Link>
-    );
+    return <CreateCategorySheet />;
   }
   return (
     <div className="">

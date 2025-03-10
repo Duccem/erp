@@ -8,21 +8,27 @@ import { ListCategories } from '../../application/list-categories';
 import { PrismaCategoryRepository } from '../../infrastructure/prisma-category-repository';
 
 const schema = z.object({
-  filters: z.array(
-    z.object({
-      field: z.string(),
-      operator: z.string(),
-      value: z.any(),
+  filters: z
+    .array(
+      z.object({
+        field: z.string(),
+        operator: z.string(),
+        value: z.any(),
+      })
+    )
+    .optional(),
+  order: z
+    .object({
+      field: z.string().optional(),
+      order: z.string().optional(),
     })
-  ),
-  order: z.object({
-    field: z.string(),
-    order: z.enum(['ASC', 'DESC']),
-  }),
-  pagination: z.object({
-    page: z.number(),
-    limit: z.number(),
-  }),
+    .optional(),
+  pagination: z
+    .object({
+      page: z.number(),
+      limit: z.number(),
+    })
+    .optional(),
 });
 
 export const listCategories = authActionClient
@@ -36,6 +42,7 @@ export const listCategories = authActionClient
           filters: parsedInput.filters as any,
           order: parsedInput.order as any,
           pagination: parsedInput.pagination as any,
+          organizationId: organization.id,
         }),
       ['list-categories', user.id, organization.id],
       { tags: [`list-categories-${organization.id}-${user.id}`], revalidate: 3600 }
