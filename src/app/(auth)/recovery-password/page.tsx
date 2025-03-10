@@ -1,5 +1,7 @@
+import RecoveryPasswordForm from '@/lib/auth/recovery-password/components/form';
+
 const Page = () => {
-  return <div></div>;
+  return <RecoveryPasswordForm />;
 };
 
 export default Page;

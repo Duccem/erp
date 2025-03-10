@@ -1,4 +1,4 @@
-import CategoryTable from './components/table';
+import CategoryTable from '@/modules/category/ui/components/table';
 
 const Page = () => {
   return (

@@ -1,8 +1,8 @@
+import { AppSidebar } from '@/lib/ui/components/internal/sidebar';
+import { AppTopBar } from '@/lib/ui/components/internal/top-bar';
+import { UserSession } from '@/lib/ui/components/internal/user-session';
 import { SidebarProvider } from '@/lib/ui/components/ui/sidebar';
 import { Suspense } from 'react';
-import { AppSidebar } from './components/sidebar';
-import { AppTopBar } from './components/top-bar';
-import { UserSession } from './components/user-session';
 
 export default function Layout({
   children,

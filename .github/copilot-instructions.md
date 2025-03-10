@@ -47,3 +47,12 @@ Key Conventions
   - Avoid for data fetching or state management.
 
 Follow Next.js docs for Data Fetching, Rendering, and Routing.
+
+To write new code, feature, or bug fixes, follow these guidelines:
+
+- Use the "modules" directory for new features.
+- Respect the existing code structure and patterns.
+- Use the folder domain for things like entity definitions, types and interfaces
+- Use the application folder for the main application logic and use cases, using injection for dependencies
+- Use the infrastructure folder for things like database access, external services, etc.
+- Use the ui folder to things like components, pages, stores, hooks and react context

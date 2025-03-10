@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
+import Banner from '@/lib/ui/components/internal/banner';
 import Logo from '@/lib/ui/components/internal/logo';
-import Banner from './banner';
 
 interface LayoutProps {
   children: ReactNode;

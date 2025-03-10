@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { useOauth } from '../use-oauth';
+import { useOauth } from '../../use-oauth';
 
 const formSchema = z.object({
   email: z.string().min(3, { message: 'Invalid email' }).email({ message: 'Invalid email' }),
