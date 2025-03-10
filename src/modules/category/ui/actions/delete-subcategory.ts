@@ -1,0 +1,26 @@
+'use server';
+
+import { authActionClient } from '@/lib/actions';
+import { database } from '@/lib/database';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import { z } from 'zod';
+import { RemoveSubCategory } from '../../application/remove-sub-category';
+import { PrismaCategoryRepository } from '../../infrastructure/prisma-category-repository';
+
+const schema = z.object({
+  categoryId: z.string(),
+  subCategoryId: z.string(),
+});
+
+export const removeSubCategory = authActionClient
+  .schema(schema)
+  .metadata({ actionName: 'delete-subcategory' })
+  .action(async ({ parsedInput, ctx: { user, organization } }) => {
+    const service = new RemoveSubCategory(new PrismaCategoryRepository(database));
+    await service.run({
+      categoryId: parsedInput.categoryId,
+      subCategoryId: parsedInput.subCategoryId,
+    });
+    revalidateTag(`list-categories-${organization.id}-${user.id}`);
+    revalidatePath('/warehouse/categories');
+  });
