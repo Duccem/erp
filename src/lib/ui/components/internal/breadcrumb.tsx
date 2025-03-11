@@ -30,7 +30,7 @@ const AppBreadcrumb = () => {
   let breadcrumbPage: ReactElement = <></>;
   for (let i = 0; i < pathNames.length; i++) {
     const route = pathNames[i];
-    const href = `/${pathNames.at(0)}/${route}`;
+    const href = `/${pathNames.at(0)}`;
     if (i === pathNames.length - 1) {
       breadcrumbPage = (
         <BreadcrumbItem>

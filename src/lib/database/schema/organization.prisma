@@ -10,6 +10,7 @@ model Organization {
   teams       Team[]
   categories  Category[]
   products    Product[]
+  Warehouse   Warehouse[]
 
   @@unique([slug])
   @@map("organization")

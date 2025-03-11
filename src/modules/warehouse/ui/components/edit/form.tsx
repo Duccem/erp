@@ -1,48 +1,40 @@
+'use client';
+
 import { Button } from '@/lib/ui/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/lib/ui/components/ui/form';
-import { InputColor } from '@/lib/ui/components/ui/input-color';
+import { Input } from '@/lib/ui/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { v4 } from 'uuid';
 import { z } from 'zod';
-import { saveSubCategory } from '../../actions/add-subcategory';
+import { saveWarehouse } from '../../actions/save-warehouse';
 
 const formSchema = z.object({
   name: z.string(),
-  color: z.string(),
+  address: z.string(),
+  id: z.string(),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const CreateSubCategoryForm = ({ toggle, categoryId }: { toggle: VoidFunction; categoryId: string }) => {
-  const form = useForm<FormSchema>({
+const EditWarehouseForm = ({ warehouse, toggle }: { warehouse: FormSchema; toggle: VoidFunction }) => {
+  const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: '',
-      color: '',
-    },
+    defaultValues: warehouse,
   });
   const { isSubmitting } = form.formState;
 
   const submit = async (data: FormSchema) => {
     try {
-      await saveSubCategory({
-        id: v4(),
-        color: data.color,
-        name: data.name,
-        categoryId,
-      });
-      toast.success('Categoria creada');
-      form.reset();
+      await saveWarehouse(data);
+      toast.success('Warehouse updated');
       toggle();
     } catch (error) {
       console.log(error);
-      toast.error('Error al crear la categoria');
+      toast.error('Error updating warehouse');
     }
   };
-
   return (
     <Form {...form}>
       <form action="" onSubmit={form.handleSubmit(submit, (e) => console.log(e))}>
@@ -52,24 +44,29 @@ const CreateSubCategoryForm = ({ toggle, categoryId }: { toggle: VoidFunction; c
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm  font-bold ">Nombre</FormLabel>
+                <FormLabel className="text-sm font-bold">Name</FormLabel>
                 <FormControl>
-                  <InputColor
-                    onChange={(e) => {
-                      field.onChange(e.name);
-                      form.setValue('color', e.color);
-                    }}
-                    placeholder="Nombre de la categoria"
-                    defaultColor={'#000'}
-                    defaultValue=""
-                  />
+                  <Input placeholder="Warehouse name" {...field} />
                 </FormControl>
-                <FormMessage></FormMessage>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm font-bold">Address</FormLabel>
+                <FormControl>
+                  <Input placeholder="Warehouse address" {...field} />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
           <Button disabled={isSubmitting} type="submit" className="w-full">
-            {isSubmitting ? <Loader2 className="animate-spin" /> : 'Crear sub categoria'}
+            {isSubmitting ? <Loader2 className="animate-spin" /> : 'Save warehouse'}
           </Button>
         </div>
       </form>
@@ -77,4 +74,4 @@ const CreateSubCategoryForm = ({ toggle, categoryId }: { toggle: VoidFunction; c
   );
 };
 
-export default CreateSubCategoryForm;
+export default EditWarehouseForm;

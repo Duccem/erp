@@ -5,9 +5,8 @@ import { useSortQuery } from '@/lib/ui/components/ui/data-table/hooks';
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowDown, ArrowUp, Eye, Trash } from 'lucide-react';
 import Link from 'next/link';
-import DeleteCategoryDialog from '../delete/delete-dialog';
 
-export const categoryColumns: ColumnDef<{ id: string; name: string; color: string }>[] = [
+export const warehouseColumns: ColumnDef<{ id: string; name: string; address: string }>[] = [
   {
     id: 'select',
     enableHiding: false,
@@ -34,7 +33,7 @@ export const categoryColumns: ColumnDef<{ id: string; name: string; color: strin
       const { createSortQuery, column, value } = useSortQuery();
       return (
         <Button className="p-0 hover:bg-transparent space-x-2" variant="ghost" onClick={() => createSortQuery('name')}>
-          <span>Nombre</span>
+          <span>Name</span>
           {'name' === column && value === 'ASC' && <ArrowUp size={16} />}
           {'name' === column && value === 'DESC' && <ArrowDown size={16} />}
         </Button>
@@ -42,15 +41,19 @@ export const categoryColumns: ColumnDef<{ id: string; name: string; color: strin
     },
   },
   {
-    accessorKey: 'color',
-    cell: ({ row }) => <div className="size-4 rounded-[4px]" style={{ backgroundColor: row.original.color }}></div>,
+    accessorKey: 'address',
+    cell: ({ row }) => row.original.address,
     header: () => {
       const { createSortQuery, column, value } = useSortQuery();
       return (
-        <Button className="p-0 hover:bg-transparent space-x-2" variant="ghost" onClick={() => createSortQuery('color')}>
-          <span>Color</span>
-          {'color' === column && value === 'ASC' && <ArrowUp size={16} />}
-          {'color' === column && value === 'DESC' && <ArrowDown size={16} />}
+        <Button
+          className="p-0 hover:bg-transparent space-x-2"
+          variant="ghost"
+          onClick={() => createSortQuery('address')}
+        >
+          <span>Address</span>
+          {'address' === column && value === 'ASC' && <ArrowUp size={16} />}
+          {'address' === column && value === 'DESC' && <ArrowDown size={16} />}
         </Button>
       );
     },
@@ -62,15 +65,17 @@ export const categoryColumns: ColumnDef<{ id: string; name: string; color: strin
     cell: ({ row, table }) => {
       return (
         <div className="flex items-center justify-start gap-3">
-          <Link href={`/categories/${row.original.id}`}>
+          <Link href={`/warehouses/${row.original.id}`}>
             <Button variant="ghost" size={'icon'}>
               <Eye />
             </Button>
           </Link>
-          <DeleteCategoryDialog category={row.original} />
+          <Button variant="ghost" size={'icon'}>
+            <Trash />
+          </Button>
         </div>
       );
     },
-    header: () => 'Acciones',
+    header: () => 'Actions',
   },
 ];

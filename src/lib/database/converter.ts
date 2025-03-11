@@ -1,14 +1,4 @@
-import {
-  Criteria,
-  Filter,
-  Filters,
-  FilterType,
-  Include,
-  isFilter,
-  Operator,
-  Order,
-  Pagination,
-} from '@/lib/ddd/core/criteria';
+import { Criteria, Filter, Filters, FilterType, Include, Operator, Order, Pagination } from '@/lib/ddd/core/criteria';
 interface TransformerFunction<T, K> {
   (value: T): K;
 }
@@ -44,7 +34,6 @@ export class PrismaCriteriaConverter {
 
   private filter(filters: Filters): any {
     const filter = filters.filters.map((filter: any) => {
-      if (!isFilter(filter)) return this.filter(filter);
       const transformer = this.filterTransformers.get(filter.operator);
       if (transformer) {
         return transformer(filter);

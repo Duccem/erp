@@ -26,7 +26,7 @@ export class PrismaCategoryRepository implements CategoryRepository {
           upsert: data.subCategories.map((subCategory) => ({
             where: { id: subCategory.id },
             update: { name: subCategory.name, color: subCategory.color },
-            create: { name: subCategory.name, color: subCategory.color, id: data.id },
+            create: { name: subCategory.name, color: subCategory.color },
           })),
         },
       },
@@ -64,5 +64,9 @@ export class PrismaCategoryRepository implements CategoryRepository {
         },
       },
     });
+  }
+
+  async delete(categoryId: string): Promise<void> {
+    await this.model.delete({ where: { id: categoryId } });
   }
 }

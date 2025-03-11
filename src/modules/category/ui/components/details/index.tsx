@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/lib/ui/components/ui/card';
 import { getCategory } from '../../actions/get-category';
 import CreateSubCategorySheet from '../create-subcategory/sheet';
+import DeleteCategoryDialog from '../delete/delete-dialog';
 import EditCategorySheet from '../edit/sheet';
 import SubCategoryList from './sub-categories-list';
 
@@ -13,7 +14,10 @@ const DetailsCategory = async ({ id }: { id: string }) => {
         <CardHeader className="pb-2" style={{ borderBottom: `4px solid ${category.color}` }}>
           <div className="flex justify-between items-center">
             <CardTitle className="text-2xl">{category.name}</CardTitle>
-            <EditCategorySheet category={category} />
+            <div className="flex gap-2 items-center">
+              <EditCategorySheet category={category} />
+              <DeleteCategoryDialog category={category} />
+            </div>
           </div>
         </CardHeader>
         <CardContent className="pt-4">
