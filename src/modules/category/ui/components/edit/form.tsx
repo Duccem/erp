@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/lib/ui/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/lib/ui/components/ui/form';
 import { InputColor } from '@/lib/ui/components/ui/input-color';
@@ -5,34 +7,27 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { v4 } from 'uuid';
 import { z } from 'zod';
 import { saveCategory } from '../../actions/save-category';
 
 const formSchema = z.object({
   name: z.string(),
   color: z.string(),
+  id: z.string(),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const CreateCategoryForm = ({ toggle }: { toggle: VoidFunction }) => {
-  const form = useForm<FormSchema>({
+const EditCategoryForm = ({ category, toggle }: { category: FormSchema; toggle: VoidFunction }) => {
+  const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: '',
-      color: '',
-    },
+    defaultValues: category,
   });
   const { isSubmitting } = form.formState;
 
   const submit = async (data: FormSchema) => {
     try {
-      await saveCategory({
-        id: v4(),
-        color: data.color,
-        name: data.name,
-      });
+      await saveCategory(data);
       toast.success('Categoria creada');
       toggle();
     } catch (error) {
@@ -40,7 +35,6 @@ const CreateCategoryForm = ({ toggle }: { toggle: VoidFunction }) => {
       toast.error('Error al crear la categoria');
     }
   };
-
   return (
     <Form {...form}>
       <form action="" onSubmit={form.handleSubmit(submit, (e) => console.log(e))}>
@@ -67,7 +61,7 @@ const CreateCategoryForm = ({ toggle }: { toggle: VoidFunction }) => {
             )}
           />
           <Button disabled={isSubmitting} type="submit" className="w-full">
-            {isSubmitting ? <Loader2 className="animate-spin" /> : 'Crear categoria'}
+            {isSubmitting ? <Loader2 className="animate-spin" /> : 'Guardar categoria'}
           </Button>
         </div>
       </form>
@@ -75,4 +69,4 @@ const CreateCategoryForm = ({ toggle }: { toggle: VoidFunction }) => {
   );
 };
 
-export default CreateCategoryForm;
+export default EditCategoryForm;

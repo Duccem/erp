@@ -23,7 +23,11 @@ export class PrismaCategoryRepository implements CategoryRepository {
         color: data.color,
         organizationId: data.organizationId,
         subCategories: {
-          create: data.subCategories,
+          upsert: data.subCategories.map((subCategory) => ({
+            where: { id: subCategory.id },
+            update: { name: subCategory.name, color: subCategory.color },
+            create: { name: subCategory.name, color: subCategory.color, id: data.id },
+          })),
         },
       },
       create: {
@@ -31,9 +35,6 @@ export class PrismaCategoryRepository implements CategoryRepository {
         name: data.name,
         color: data.color,
         organizationId: data.organizationId,
-        subCategories: {
-          create: data.subCategories,
-        },
       },
     });
   }
@@ -47,10 +48,21 @@ export class PrismaCategoryRepository implements CategoryRepository {
 
   async get(criteria: Criteria): Promise<Category | null> {
     const { where } = this.converter.criteria(criteria);
-    const category = await this.model.findFirst({ where });
+    const category = await this.model.findFirst({ where, include: { subCategories: true } });
 
     if (!category) return null;
 
     return Category.fromPrimitives(category as unknown as Primitives<Category>);
+  }
+
+  async removeSubCategory(categoryId: string, subCategoryId: string): Promise<void> {
+    await this.model.update({
+      where: { id: categoryId },
+      data: {
+        subCategories: {
+          delete: { id: subCategoryId },
+        },
+      },
+    });
   }
 }

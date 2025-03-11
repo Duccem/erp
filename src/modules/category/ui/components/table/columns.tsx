@@ -2,15 +2,9 @@
 import { Button } from '@/lib/ui/components/ui/button';
 import { Checkbox } from '@/lib/ui/components/ui/checkbox';
 import { useSortQuery } from '@/lib/ui/components/ui/data-table/hooks';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/lib/ui/components/ui/dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowDown, ArrowUp, MoreHorizontal } from 'lucide-react';
+import { ArrowDown, ArrowUp, Eye, Trash } from 'lucide-react';
+import Link from 'next/link';
 
 export const categoryColumns: ColumnDef<{ id: string; name: string; color: string }>[] = [
   {
@@ -64,21 +58,16 @@ export const categoryColumns: ColumnDef<{ id: string; name: string; color: strin
     enableHiding: false,
     cell: ({ row, table }) => {
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
+        <div className="flex items-center justify-start gap-3">
+          <Link href={`/warehouse/categories/${row.original.id}`}>
+            <Button variant="ghost" size={'icon'}>
+              <Eye />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="rounded-none">
-            <DropdownMenuItem onClick={() => console.log('')} className="rounded-none">
-              View details
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive rounded-none">Cancelar</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </Link>
+          <Button variant="ghost" size={'icon'}>
+            <Trash />
+          </Button>
+        </div>
       );
     },
     header: () => 'Acciones',

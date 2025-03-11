@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { v4 } from 'uuid';
 import { z } from 'zod';
-import { saveCategory } from '../../actions/save-category';
+import { saveSubCategory } from '../../actions/add-subcategory';
 
 const formSchema = z.object({
   name: z.string(),
@@ -16,7 +16,7 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const CreateCategoryForm = ({ toggle }: { toggle: VoidFunction }) => {
+const CreateSubCategoryForm = ({ toggle, categoryId }: { toggle: VoidFunction; categoryId: string }) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,10 +28,11 @@ const CreateCategoryForm = ({ toggle }: { toggle: VoidFunction }) => {
 
   const submit = async (data: FormSchema) => {
     try {
-      await saveCategory({
+      await saveSubCategory({
         id: v4(),
         color: data.color,
         name: data.name,
+        categoryId,
       });
       toast.success('Categoria creada');
       toggle();
@@ -58,8 +59,8 @@ const CreateCategoryForm = ({ toggle }: { toggle: VoidFunction }) => {
                       form.setValue('color', e.color);
                     }}
                     placeholder="Nombre de la categoria"
-                    defaultColor={form.watch(`color`)}
-                    defaultValue={form.watch(`name`)}
+                    defaultColor={'#000'}
+                    defaultValue=""
                   />
                 </FormControl>
                 <FormMessage></FormMessage>
@@ -67,7 +68,7 @@ const CreateCategoryForm = ({ toggle }: { toggle: VoidFunction }) => {
             )}
           />
           <Button disabled={isSubmitting} type="submit" className="w-full">
-            {isSubmitting ? <Loader2 className="animate-spin" /> : 'Crear categoria'}
+            {isSubmitting ? <Loader2 className="animate-spin" /> : 'Crear sub categoria'}
           </Button>
         </div>
       </form>
@@ -75,4 +76,4 @@ const CreateCategoryForm = ({ toggle }: { toggle: VoidFunction }) => {
   );
 };
 
-export default CreateCategoryForm;
+export default CreateSubCategoryForm;

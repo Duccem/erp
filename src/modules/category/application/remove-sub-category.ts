@@ -17,8 +17,6 @@ export class RemoveSubCategory {
     if (!category) {
       throw new NotFoundError('Category not found');
     }
-
-    category.removeSubCategory(subCategoryId);
-    await this.categoryRepository.save(category);
+    await this.categoryRepository.removeSubCategory(categoryId, subCategoryId);
   }
 }

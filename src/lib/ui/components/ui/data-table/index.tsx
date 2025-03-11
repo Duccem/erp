@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/lib/ui/lib/utils';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable, type VisibilityState } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../table';
@@ -79,7 +80,15 @@ export function DataTable<TData extends CollectionData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                    <TableCell
+                      key={cell.id}
+                      className={cn('', {
+                        'w-[10%]': cell.column.id == 'select',
+                        'w-[15%]': cell.column.id == 'actions',
+                      })}
+                    >
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))

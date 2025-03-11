@@ -22,5 +22,6 @@ export const removeSubCategory = authActionClient
       subCategoryId: parsedInput.subCategoryId,
     });
     revalidateTag(`list-categories-${organization.id}-${user.id}`);
-    revalidatePath('/warehouse/categories');
+    revalidateTag(`get-category-${organization.id}-${user.id}-${parsedInput.categoryId}`);
+    revalidatePath(`/warehouse/categories/${parsedInput.categoryId}`);
   });

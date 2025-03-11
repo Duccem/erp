@@ -26,4 +26,5 @@ export const saveCategory = authActionClient
     });
     revalidateTag(`list-categories-${organization.id}-${user.id}`);
     revalidatePath('/warehouse/categories');
+    revalidatePath(`/warehouse/categories/${parsedInput.id}`);
   });

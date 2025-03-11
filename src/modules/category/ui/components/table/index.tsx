@@ -1,21 +1,21 @@
 import DataTable from '@/lib/ui/components/ui/data-table';
 import { DataTableProvider } from '@/lib/ui/components/ui/data-table/provider';
 import { ColumnVisibility } from '@/lib/ui/components/ui/data-table/visibility';
-import { createLoader, parseAsInteger, parseAsString, SearchParams } from 'nuqs/server';
 import { listCategories } from '../../actions/list-categories';
 import CategoryActions from './actions';
 import { categoryColumns } from './columns';
 
-const categoryParams = {
-  name: parseAsString,
-  sort: parseAsString,
-  page: parseAsInteger.withDefault(0),
-  pageSize: parseAsInteger.withDefault(10),
-};
-const loadSearchParams = createLoader(categoryParams);
-
-const CategoryTable = async ({ searchParams }: { searchParams: Promise<SearchParams> }) => {
-  const { name, page, pageSize, sort } = await loadSearchParams(searchParams);
+const CategoryTable = async ({
+  name,
+  page,
+  pageSize,
+  sort,
+}: {
+  name: string | null;
+  page?: number;
+  pageSize?: number;
+  sort: string | null;
+}) => {
   const response = await listCategories({
     filters: name ? [{ field: 'name', operator: 'contains', value: name }] : undefined,
     pagination: page && pageSize ? { page: page + 1, limit: pageSize } : undefined,
@@ -33,7 +33,7 @@ const CategoryTable = async ({ searchParams }: { searchParams: Promise<SearchPar
             columns={categoryColumns}
             data={response!.data!}
             meta={{
-              page: page + 1,
+              page: (page ?? 0) + 1,
               pages: Math.ceil((response?.data?.length ?? 1) / (pageSize ?? 10)),
               size: pageSize ?? 10,
               total: response?.data?.length ?? 0,

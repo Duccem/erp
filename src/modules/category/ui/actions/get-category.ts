@@ -16,8 +16,12 @@ export const getCategory = authActionClient
   .metadata({ actionName: 'get-category' })
   .action(async ({ parsedInput, ctx: { user, organization } }) => {
     const service = new GetCategory(new PrismaCategoryRepository(database));
-    return cache(() => service.run({ categoryId: parsedInput.id }), ['get-category', user.id, organization.id], {
-      tags: [`get-category-${organization.id}-${user.id}-${parsedInput.id}`],
-      revalidate: 3600,
-    })();
+    return cache(
+      () => service.run({ categoryId: parsedInput.id }),
+      ['get-category', user.id, organization.id, parsedInput.id],
+      {
+        tags: [`get-category-${organization.id}-${user.id}-${parsedInput.id}`],
+        revalidate: 3600,
+      }
+    )();
   });

@@ -5,4 +5,5 @@ export interface CategoryRepository {
   save(category: Category): Promise<void>;
   search(criteria: Criteria): Promise<Category[]>;
   get(criteria: Criteria): Promise<Category | null>;
+  removeSubCategory(categoryId: string, subCategoryId: string): Promise<void>;
 }
