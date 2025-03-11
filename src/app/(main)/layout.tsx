@@ -1,3 +1,4 @@
+import AppBreadcrumb from '@/lib/ui/components/internal/breadcrumb';
 import { AppSidebar } from '@/lib/ui/components/internal/sidebar';
 import { AppTopBar } from '@/lib/ui/components/internal/top-bar';
 import { UserSession } from '@/lib/ui/components/internal/user-session';
@@ -16,6 +17,7 @@ export default function Layout({
         <AppSidebar />
         <div className="flex flex-col items-start w-full">
           <AppTopBar />
+          <AppBreadcrumb />
           <Suspense>{children}</Suspense>
         </div>
       </SidebarProvider>

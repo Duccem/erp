@@ -24,11 +24,11 @@ const CategoryTable = async ({
   return (
     <DataTableProvider>
       <div className="w-full flex flex-col gap-4">
-        <div className="flex px-4 py-7 w-full gap-3">
+        <div className="flex  py-7 w-full gap-3">
           <ColumnVisibility />
           <CategoryActions />
         </div>
-        <div className="px-4 w-full">
+        <div className=" w-full">
           <DataTable
             columns={categoryColumns}
             data={response!.data!}

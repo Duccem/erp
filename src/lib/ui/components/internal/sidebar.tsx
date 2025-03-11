@@ -151,27 +151,27 @@ const sidebarItems = [
       {
         icon: Warehouse,
         title: 'Almacén',
-        href: '/warehouse',
+        href: '',
         roles: ['USER', 'ADMIN'],
         routes: [
           {
             title: 'Productos',
-            href: '/warehouse/products',
+            href: '/products',
             roles: ['USER', 'ADMIN'],
           },
           {
             title: 'Categorías',
-            href: '/warehouse/categories',
+            href: '/categories',
             roles: ['USER', 'ADMIN'],
           },
           {
             title: 'Proveedores',
-            href: '/warehouse/providers',
+            href: '/providers',
             roles: ['USER', 'ADMIN'],
           },
           {
             title: 'Almacenes',
-            href: '/warehouse/warehouses',
+            href: '/warehouses',
             roles: ['USER', 'ADMIN'],
           },
         ],

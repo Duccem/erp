@@ -59,7 +59,7 @@ export const categoryColumns: ColumnDef<{ id: string; name: string; color: strin
     cell: ({ row, table }) => {
       return (
         <div className="flex items-center justify-start gap-3">
-          <Link href={`/warehouse/categories/${row.original.id}`}>
+          <Link href={`/categories/${row.original.id}`}>
             <Button variant="ghost" size={'icon'}>
               <Eye />
             </Button>
