@@ -17,11 +17,13 @@ export const categoryColumns: ColumnDef<{ id: string; name: string; color: strin
       );
     },
     header: ({ table }) => {
-      <Checkbox
-        className=""
-        checked={table?.getIsAllPageRowsSelected() || (table?.getIsSomePageRowsSelected() && 'indeterminate')}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-      />;
+      return (
+        <Checkbox
+          className=""
+          checked={table?.getIsAllPageRowsSelected() || (table?.getIsSomePageRowsSelected() && 'indeterminate')}
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        />
+      );
     },
   },
   {
