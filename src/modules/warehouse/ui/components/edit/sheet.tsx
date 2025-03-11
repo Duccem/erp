@@ -12,9 +12,8 @@ const EditWarehouseSheet = ({ warehouse }: { warehouse: Primitives<Warehouse> })
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant={'outline'}>
+        <Button variant={'outline'} size={'icon'}>
           <Edit />
-          Edit warehouse
         </Button>
       </SheetTrigger>
       <SheetContent className="sm:w-1/3 sm:max-w-full p-4 bg-transparent border-none focus-visible:outline-none">

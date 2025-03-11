@@ -3,8 +3,9 @@ import { Button } from '@/lib/ui/components/ui/button';
 import { Checkbox } from '@/lib/ui/components/ui/checkbox';
 import { useSortQuery } from '@/lib/ui/components/ui/data-table/hooks';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowDown, ArrowUp, Eye, Trash } from 'lucide-react';
-import Link from 'next/link';
+import { ArrowDown, ArrowUp } from 'lucide-react';
+import EditWarehouseSheet from '../edit/sheet';
+import DeleteWarehouseDialog from './delete-dialog';
 
 export const warehouseColumns: ColumnDef<{ id: string; name: string; address: string }>[] = [
   {
@@ -65,14 +66,8 @@ export const warehouseColumns: ColumnDef<{ id: string; name: string; address: st
     cell: ({ row, table }) => {
       return (
         <div className="flex items-center justify-start gap-3">
-          <Link href={`/warehouses/${row.original.id}`}>
-            <Button variant="ghost" size={'icon'}>
-              <Eye />
-            </Button>
-          </Link>
-          <Button variant="ghost" size={'icon'}>
-            <Trash />
-          </Button>
+          <EditWarehouseSheet warehouse={row.original as any} />
+          <DeleteWarehouseDialog warehouse={row.original as any} />
         </div>
       );
     },
