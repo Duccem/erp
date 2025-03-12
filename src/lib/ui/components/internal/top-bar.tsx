@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from '@/lib/ui/components/ui/dropdown-menu';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/lib/ui/components/ui/select';
+import ChatSheet from '@/modules/chat/ui/components/sheet';
 import { Bell, LogOut, Sparkles, SunMoon, User } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
@@ -27,6 +28,7 @@ export const AppTopBar = () => {
         <AppSidebarButton />
       </div>
       <div className="flex items-center gap-3">
+        <ChatSheet />
         <ProfileButton />
       </div>
     </div>

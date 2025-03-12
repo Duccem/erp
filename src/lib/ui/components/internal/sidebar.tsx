@@ -44,6 +44,7 @@ export const AppSidebar = () => {
           title: route.title,
           href: route.href,
           icon: route.icon,
+          isActive: route.isActive,
           routes: route.routes ? route.routes.filter((route) => route.roles.includes(role)) : null,
         })),
     }));
@@ -63,10 +64,21 @@ export const AppSidebar = () => {
                 {section.items.map((item, index) => (
                   <Fragment key={`${item.title}-${index}`}>
                     {item.routes ? (
-                      <Collapsible className="group/collapsible">
+                      <Collapsible
+                        className="group/collapsible"
+                        defaultOpen={item.routes.some((subItem) => {
+                          return path == subItem.href;
+                        })}
+                      >
                         <SidebarMenuItem>
                           <CollapsibleTrigger asChild>
-                            <SidebarMenuButton>
+                            <SidebarMenuButton
+                              className={cn({
+                                'border  bg-sidebar-accent': item.routes.some((subItem) => {
+                                  return path == subItem.href;
+                                }),
+                              })}
+                            >
                               {<item.icon />}
                               <span>{item.title}</span>
                               <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -80,7 +92,7 @@ export const AppSidebar = () => {
                                     <a
                                       href={subItem.href}
                                       className={cn('hover:bg-sidebar hover:border', {
-                                        'border  bg-sidebar-accent': path == item.href,
+                                        'border  bg-sidebar-accent': path == subItem.href,
                                       })}
                                     >
                                       <span>{subItem.title}</span>
@@ -96,7 +108,7 @@ export const AppSidebar = () => {
                       <SidebarMenuItem>
                         <SidebarMenuButton
                           asChild
-                          className={cn('hover:bg-sidebar hover:border', {
+                          className={cn({
                             'border  bg-sidebar-accent': path == item.href,
                           })}
                         >
@@ -153,6 +165,7 @@ const sidebarItems = [
         title: 'Almacén',
         href: '',
         roles: ['USER', 'ADMIN'],
+        isActive: true,
         routes: [
           {
             title: 'Productos',
@@ -181,6 +194,7 @@ const sidebarItems = [
         title: 'Finanzas',
         href: '/finance',
         roles: ['ADMIN', 'USER'],
+        isActive: false,
         routes: [
           {
             title: 'Ventas',
