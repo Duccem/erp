@@ -1,0 +1,36 @@
+enum ProviderType {
+  COMPANY
+  PERSON
+
+  @@map("provider_type")
+  @@schema("erp")
+}
+
+enum ProviderStatus {
+  ACTIVE
+  INACTIVE
+
+  @@map("provider_status")
+  @@schema("erp")
+}
+
+model Provider {
+  id          String         @id @default(uuid())
+  name        String
+  description String
+  type        ProviderType   @default(COMPANY)
+  status      ProviderStatus @default(ACTIVE)
+  phone       String
+  email       String
+  address     String
+  image       String
+
+  products Product[] @relation("provider_products")
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("provider")
+  @@schema("erp")
+}
