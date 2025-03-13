@@ -1,8 +1,8 @@
 import { getSessionCookie } from 'better-auth/cookies';
 import { NextRequest, NextResponse } from 'next/server';
-export async function betterAuthMiddleware(req: NextRequest, publicRoutes: string[]) {
+export async function betterAuthMiddleware(req: NextRequest, response: NextResponse, publicRoutes: string[]) {
   if (req.nextUrl.pathname.startsWith('/api')) {
-    return NextResponse.next();
+    return response;
   }
   const session = getSessionCookie(req);
   if (!session && !publicRoutes.includes(req.nextUrl.pathname)) {
@@ -13,5 +13,5 @@ export async function betterAuthMiddleware(req: NextRequest, publicRoutes: strin
     return NextResponse.redirect(new URL('/', req.url));
   }
 
-  return NextResponse.next();
+  return response;
 }
