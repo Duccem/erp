@@ -12,17 +12,20 @@ export const metadata: Metadata = {
   description: 'Powered AI Administrative Assistant',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
   return (
     <html lang="en" suppressHydrationWarning>
       <link rel="icon" href={icon.src} sizes="any" className="hidden dark:block" />
       <link rel="icon" href={iconDark.src} sizes="any" className="dark:hidden" />
       <body className={`${nunito.className} antialiased`} suppressHydrationWarning>
-        <Providers>{children}</Providers>
+        <Providers locale={locale}>{children}</Providers>
       </body>
     </html>
   );
