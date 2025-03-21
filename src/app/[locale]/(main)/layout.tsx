@@ -2,7 +2,7 @@ import AppBreadcrumb from '@/lib/ui/components/internal/breadcrumb';
 import { AppSidebar } from '@/lib/ui/components/internal/sidebar';
 import { AppTopBar } from '@/lib/ui/components/internal/top-bar';
 import { UserSession } from '@/lib/ui/components/internal/user-session';
-import { SidebarProvider } from '@/lib/ui/components/ui/sidebar';
+import { SidebarInset, SidebarProvider } from '@/lib/ui/components/ui/sidebar';
 import { Suspense } from 'react';
 
 export default function Layout({
@@ -15,11 +15,13 @@ export default function Layout({
       <UserSession />
       <SidebarProvider>
         <AppSidebar />
-        <div className="flex flex-col items-start w-full">
-          <AppTopBar />
-          <AppBreadcrumb />
-          <Suspense>{children}</Suspense>
-        </div>
+        <SidebarInset>
+          <div className="flex flex-col items-start w-full">
+            <AppTopBar />
+            <AppBreadcrumb />
+            <Suspense>{children}</Suspense>
+          </div>
+        </SidebarInset>
       </SidebarProvider>
     </div>
   );

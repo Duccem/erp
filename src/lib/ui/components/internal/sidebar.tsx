@@ -49,7 +49,7 @@ export const AppSidebar = () => {
         })),
     }));
   return (
-    <Sidebar collapsible="icon" className="border-r">
+    <Sidebar collapsible="icon" variant="inset">
       <SidebarHeader>
         <SidebarMenuButton size={'lg'} className="mt-2 justify-center">
           <Link href={'/'}>{open ? <Logo /> : <LogoMin />}</Link>
@@ -89,14 +89,15 @@ export const AppSidebar = () => {
                               {item.routes?.map((subItem: any) => (
                                 <SidebarMenuSubItem key={subItem.title}>
                                   <SidebarMenuSubButton asChild>
-                                    <a
+                                    <Link
+                                      prefetch={true}
                                       href={subItem.href}
                                       className={cn('hover:bg-sidebar hover:border', {
                                         'border  bg-sidebar-accent': path == subItem.href,
                                       })}
                                     >
                                       <span>{subItem.title}</span>
-                                    </a>
+                                    </Link>
                                   </SidebarMenuSubButton>
                                 </SidebarMenuSubItem>
                               ))}
@@ -112,7 +113,7 @@ export const AppSidebar = () => {
                             'border  bg-sidebar-accent': path == item.href,
                           })}
                         >
-                          <Link href={item.href}>
+                          <Link href={item.href} prefetch={true}>
                             {<item.icon />}
                             <span>{item.title}</span>
                           </Link>
