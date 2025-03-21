@@ -11,11 +11,9 @@ export const GET = async (req: NextRequest, { params }: { params: Promise<{ plan
     throw new Error('unauthorized');
   }
 
-  const organization = (
-    await auth.api.listOrganizations({
-      headers: await headers(),
-    })
-  )[0];
+  const organization = await auth.api.getFullOrganization({
+    headers: await headers(),
+  });
 
   if (!organization) {
     throw new Error('No organization');
