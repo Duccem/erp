@@ -1,4 +1,4 @@
-import OrganizationForm from '@/modules/organization/ui/components/form';
+import OrganizationForm from '@/components/organization/form';
 
 const Page = () => {
   return (

@@ -1,7 +1,7 @@
-import AppBreadcrumb from '@/lib/ui/components/internal/breadcrumb';
-import { AppSidebar } from '@/lib/ui/components/internal/sidebar';
-import { AppTopBar } from '@/lib/ui/components/internal/top-bar';
-import { UserSession } from '@/lib/ui/components/internal/user-session';
+import AppBreadcrumb from '@/components/shared/breadcrumb';
+import { AppSidebar } from '@/components/shared/sidebar';
+import { AppTopBar } from '@/components/shared/top-bar';
+import { UserSession } from '@/components/shared/user-session';
 import { SidebarInset, SidebarProvider } from '@/lib/ui/components/ui/sidebar';
 import { Suspense } from 'react';
 
@@ -18,7 +18,7 @@ export default function Layout({
         <SidebarInset>
           <div className="flex flex-col items-start w-full">
             <AppTopBar />
-            <AppBreadcrumb />
+
             <Suspense>{children}</Suspense>
           </div>
         </SidebarInset>

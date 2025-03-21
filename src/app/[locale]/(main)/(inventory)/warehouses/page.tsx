@@ -1,6 +1,6 @@
-import { ErrorFallback } from '@/lib/ui/components/internal/error-fallback';
+import { ErrorFallback } from '@/components/shared/error-fallback';
+import WarehouseTable from '@/components/warehouse/table';
 import { Loading } from '@/lib/ui/components/ui/data-table/loading';
-import WarehouseTable from '@/modules/warehouse/ui/components/table';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { createLoader, parseAsInteger, parseAsString, SearchParams } from 'nuqs/server';
 import { Suspense } from 'react';

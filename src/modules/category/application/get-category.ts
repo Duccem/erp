@@ -19,8 +19,6 @@ export class GetCategory {
       throw new NotFoundError('Category not found');
     }
 
-    console.log(category);
-
     return category.toPrimitives();
   }
 }

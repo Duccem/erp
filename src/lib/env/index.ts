@@ -13,6 +13,8 @@ export const env = createEnv({
     SUPABASE_ACCESS_TOKEN: z.string(),
     UPSTASH_REDIS_REST_URL: z.string(),
     UPSTASH_REDIS_REST_TOKEN: z.string(),
+    POLAR_SECRET_KEY: z.string(),
+    POLAR_WEBHOOK_SECRET: z.string(),
     NODE_ENV: z.string(),
   },
   client: {
@@ -33,7 +35,8 @@ export const env = createEnv({
     SUPABASE_ACCESS_TOKEN: process.env.SUPABASE_ACCESS_TOKEN,
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
-
+    POLAR_SECRET_KEY: process.env.POLAR_SECRET_KEY,
+    POLAR_WEBHOOK_SECRET: process.env.POLAR_WEBHOOK_SECRET,
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_KEY: process.env.NEXT_PUBLIC_SUPABASE_KEY,

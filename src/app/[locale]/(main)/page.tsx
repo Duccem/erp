@@ -1,3 +1,4 @@
+import CreateCheckout from '@/components/shared/create-checkout';
 import { auth } from '@/lib/auth/server';
 import { Button } from '@/lib/ui/components/ui/button';
 import { headers } from 'next/headers';
@@ -10,6 +11,7 @@ const Page = async () => {
   const startOrg = orgs.length === 0;
   return (
     <div className="h-full w-full relative">
+      <CreateCheckout />
       {startOrg && (
         <div className="h-full w-full flex items-center justify-center">
           <div className="flex flex-col items-center justify-center gap-3">

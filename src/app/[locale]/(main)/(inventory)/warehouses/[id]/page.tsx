@@ -1,5 +1,5 @@
-import { ErrorFallback } from '@/lib/ui/components/internal/error-fallback';
-import DetailsWarehouse from '@/modules/warehouse/ui/components/details';
+import { ErrorFallback } from '@/components/shared/error-fallback';
+import DetailsWarehouse from '@/components/warehouse/details';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Suspense } from 'react';
 

@@ -1,4 +1,4 @@
-import RecoveryPasswordForm from '@/lib/auth/recovery-password/components/form';
+import RecoveryPasswordForm from '@/components/auth/recovery-password/form';
 
 const Page = () => {
   return <RecoveryPasswordForm />;

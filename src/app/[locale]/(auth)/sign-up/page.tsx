@@ -1,5 +1,5 @@
-import SignUpForm from '@/lib/auth/sign-up/components/form';
-import { SignUpProvider } from '@/lib/auth/sign-up/utils/provider';
+import SignUpForm from '@/components/auth/sign-up/form';
+import { SignUpProvider } from '@/providers/auth/sign-up';
 
 const Page = () => {
   return (

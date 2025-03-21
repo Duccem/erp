@@ -1,5 +1,5 @@
-import { ErrorFallback } from '@/lib/ui/components/internal/error-fallback';
-import DetailsCategory from '@/modules/category/ui/components/details/index';
+import DetailsCategory from '@/components/category/details/index';
+import { ErrorFallback } from '@/components/shared/error-fallback';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Suspense } from 'react';
 

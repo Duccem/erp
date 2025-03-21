@@ -1,3 +1,4 @@
+import { env } from '@/lib/env';
 import { PrismaClient } from '@prisma/client';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
@@ -5,7 +6,6 @@ import { nextCookies } from 'better-auth/next-js';
 import { bearer, emailOTP, organization } from 'better-auth/plugins';
 import { headers } from 'next/headers';
 import { cache } from 'react';
-import { env } from '../env';
 const prisma = new PrismaClient();
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {

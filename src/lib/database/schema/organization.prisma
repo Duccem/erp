@@ -5,6 +5,7 @@ model Organization {
   logo        String?
   createdAt   DateTime
   metadata    String?
+  plan        String?      @default("free")
   members     Member[]
   invitations Invitation[]
   teams       Team[]
